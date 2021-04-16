@@ -1,4 +1,5 @@
-irf.pages.controller("StageCtrl",["$log", "$scope", "$state", "$stateParams","$q", "$uibModal", "irfNavigator",
+angular.module('irf.stage', ['irf.ui.form.engine'])
+.controller("StageCtrl",["$log", "$scope", "$state", "$stateParams","$q", "$uibModal", "irfNavigator",
 function($log, $scope, $state, $stateParams, $q, $uibModal, irfNavigator) {
 
     //$scope.data = $scope.$parent.data;

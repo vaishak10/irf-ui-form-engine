@@ -1,6 +1,5 @@
-var irfUiForm = angular.module("IRFUiForm",[]);
-
-irfUiForm.config([
+angular.module('irf.design', ['irf.ui.form.engine'])
+.config([
 	"$stateProvider", "$urlRouterProvider",
 	function($stateProvider, $urlRouterProvider) {
         // https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states

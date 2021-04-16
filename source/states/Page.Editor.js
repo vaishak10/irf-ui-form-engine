@@ -1,4 +1,5 @@
-irf.pages.controller("EditorCtrl", ["$log", "$scope", "$state", "$stateParams", "$uibModal", "$q", "irfNavigator",
+angular.module('irf.editor', ['irf.ui.form.engine'])
+.controller("EditorCtrl", ["$log", "$scope", "$state", "$stateParams", "$uibModal", "$q", "irfNavigator",
     function ($log, $scope, $state, $stateParams, $uibModal, $q, irfNavigator) {
         //$scope.data = $scope.$parent.data;
         console.log($scope.data);

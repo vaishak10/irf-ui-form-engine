@@ -1,4 +1,5 @@
-irf.pages.directive("genericQueue",function(){
+angular.module('irf.uiEntity', ['irf.ui.form.engine'])
+.directive("genericQueue",function(){
     return {
         restrict : "AE",
         scope :{
