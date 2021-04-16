@@ -1,0 +1,622 @@
+<style>
+    .editor-heading>h1{
+        font-size: 20px;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+        padding-left: 15px;
+    }
+    .box{
+        margin-left: 15px;
+        width: 97%;
+    }
+
+    /*Stages Box Styling*/
+    .stages{
+        position: relative;
+    }
+    .add-stages{
+        position: absolute;
+        bottom: 2px;
+        display: grid;
+        grid-template-columns: 4.5fr 1.2fr;
+        padding: 0px 7px;
+    }
+    .stage-item{
+        position: relative;
+        padding: 5px;
+        /* text-align: center; */
+        background: #ededed;
+        margin: 2px;
+        border-radius: 2px;
+        font-size: 14px;
+        border: 0.1px solid #d0d0d0;
+        /* justify-items: center; */
+        align-items: center;
+        display: grid;
+        grid-template-columns: 9fr 1fr;
+        padding-left: 10px;
+        cursor: pointer;
+    }
+    .design-section{
+        position: relative;
+    }
+    .stages-list{
+        position: relative;
+        display: grid;
+        overflow-y: scroll;
+        max-height: 230px;
+    }
+
+    .draggable-box{
+        position: relative;
+        padding: 7px;
+        text-align: center;
+        background: #c1bfbf;
+        margin: 5px;
+        border-radius: 5px;
+    }
+    .stage-box,
+    .ui-route-box,
+    .dashboard-box{
+        position: relative;
+        display: grid;
+        grid-template-rows: 0fr 3fr 0fr;
+    }
+
+    .stage-add-section,
+    .ui-route-add-section,
+    .dashboard-add-section{
+        position: relative;
+        bottom: 5px;
+    }
+    .empty-list-section{
+        text-align: center;
+        color: grey;
+    }
+    .icon {
+        display: grid;
+        grid-template-columns: 0.2fr 0.2fr;
+        grid-column-gap: 0.5rem;
+    }
+    .stage-close,
+    .stage-edit,
+    .entity-close,
+    .entity-edit{
+        padding: 5px;
+        /* margin-right: 10px; */
+    }
+    .schema-form-section>hr{
+        margin-top: 10px;
+    }
+    
+    /* UI Routes Box Styling*/
+    .entity-item>p{
+        margin: 2px;
+    }
+    .entity{
+        position: relative;
+    }
+    .add-entities{
+        position: absolute;
+        bottom: 2px;
+        display: grid;
+        grid-template-columns: 4.5fr 1.2fr;
+        padding: 0px 7px;
+    }
+    .entity-item{
+        position: relative;
+        padding: 8px;
+        /* text-align: center; */
+        background: #ededed;
+        margin: 2px;
+        border-radius: 2px;
+        font-size: 14px;
+        border: 0.1px solid #d0d0d0;
+        /* justify-items: center; */
+        align-items: center;
+        display: grid;
+        grid-template-columns: 9fr 1fr;
+        /* padding-left: 10px; */
+        cursor: pointer;
+    }
+    mark.gray{
+        color:#808080;
+        background: none;
+    }
+
+    /*Dashboard Box Styling*/
+    .row{
+        margin: 0 -5px;
+    }
+    .small-box{
+        border-radius: 2px;
+        position: relative;
+        display: block;
+        margin-bottom: 0px;
+        box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+        cursor: pointer;
+    }
+    .small-box>.inner {
+        padding: 10px;
+    }
+    .entity-item>li{
+        display: block;
+    }
+    .small-box>h3 {
+        font-size: 38px;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        white-space: nowrap;
+        padding: 0;
+    }
+    .small-box>p {
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 16px !important;
+    }
+    .small-box-footer{
+        position: relative;
+        display: grid;
+        grid-template-columns: 0.5fr 0.5fr;
+        font-size: 2rem;
+        text-align: center;
+        margin-top: -2px;
+        cursor: pointer;
+    }
+    .inner{
+        display: grid;
+        /* padding: 15px;
+        grid-template-rows: 2fr 2fr;
+        grid-row-gap: 0.5rem; */
+    }
+    .col-sm-2 {
+        width: 25%;
+    }
+    .dashboard-item{
+        position: relative;
+        padding: 8px;
+        /* text-align: center; */
+        /* background: #ededed; */
+        margin: 2px;
+        border-radius: 2px;
+        font-size: 14px;
+        /* border: 0.1px solid #d0d0d0; */
+        /* justify-items: center; */
+        align-items: center;
+        display: grid;
+        /* grid-template-columns: 9fr 1fr; */
+        /* padding-left: 10px; */
+        cursor: default;
+    }
+    .edit-dashboard-icon,
+    .remove-dashboard-icon{
+        padding: 6px 6px;
+    }
+    .edit-dashboard-icon{
+        background-color: green;
+        color: white;
+    }
+    .remove-dashboard-icon{
+        background-color: red;
+        color: white;
+    }
+</style>
+
+<div class="editor-heading">
+    <h1>Stage Details</h1>
+</div>
+<div class="stage-definition">
+    <div class="box box-theme">
+        <div class="box-header with-border">
+            <h3 class="box-title">Stages</h3>
+        </div>
+        <div class="box-body stage-box form-horizontal">
+            <div>
+                <div ng-if="rootModel.stages.length == 0">
+                    <h5 class="empty-list-section">Add a Stage</h5>
+                </div>
+                <div ng-if="rootModel.stages.length > 0" class="stages-list">
+                    <div class="stage-item {{stage.class}}" ng-click="selectStage($event,$index)" ng-repeat="stage in rootModel.stages track by $index">
+                        {{stage.name}} 
+                        <div class="icon">
+                            <span title="Edit stage" class="fa fa-pencil stage-edit" ng-click=editStage($event,$index)></span>
+                            <span title="Remove stage" class="fa fa-close stage-close" ng-click=removeStage($event,$index)></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stage-add-section">
+                <div class="schema-form-section">
+                    <hr>
+                </div>
+                <div>
+                    <button ng-click="newStage()" class="btn btn-theme"> <i class="fa fa-plus"></i> Add</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <ui-view></ui-view>
+</div>
+<div class="ui-routes">
+    <div class="box box-theme">
+        <div class="box-header with-border">
+            <h3 class="box-title">UI Routes</h3>
+        </div>
+        <div class="box-body ui-route-box">
+            <div ng-if="rootModel.entities.length == 0">
+                <h5 class="empty-list-section">Add UI entity Routes</h5>
+            </div>
+            <div ng-if="rootModel.entities.length > 0" class="entity-list">
+                <div class="entity-item {{entity.class}}" ng-click="selectEntity($event,$index)" ng-repeat="entity in rootModel.entities track by $index">
+                    <p>{{entity.routeName}} | <mark class="gray">{{entity.routePath}}</mark></p>
+                    <div class="icon">
+                        <span title="Edit Entity" class="fa fa-pencil entity-edit" ng-click=editEntity($event,$index)></span>
+                        <span title="Close Entity" class="fa fa-close entity-close" ng-click=removeEntity($event,$index)></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-route-add-section">
+                <div class="schema-form-section">
+                    <hr>
+                </div>
+                <div>
+                    <button ng-click="newEntity()" class="btn btn-theme"> <i class="fa fa-plus"></i> Add</button>
+                </div>
+            </div>
+            <!-- <div class="row" ng-if="entities.detail.routeDetails.length > 0 || entities.queue.routeDetails.length > 0">
+                <div class="col col-xs-4 col-sm-2" ng-repeat="queue in entities.queue.routeDetails track by $index">
+                    <div class="small-box bg-theme">
+                        <div class="entity-item">
+                            <div class="inner">
+                                <h3><i class="fa fa-pencil-square-o" ng-click="editEntity($event,$index)"></i></h3>
+                                <p>ScreeingQueue</p>
+                                <p>{{entities.queue.type}}: {{queue.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-xs-4 col-sm-2" ng-repeat="detail in entities.detail.routeDetails  track by $index">
+                    <div class="small-box bg-theme">
+                        <div class="entity-item">
+                            <div class="inner">
+                                <h3><i class="fa fa-pencil-square-o" ng-click="editEntity($event,$index)"></i></h3>
+                                <p>ScreeingQueue- {{detail.path}}</p>
+                                <p>{{entities.detail.type}}: {{detail.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>         -->
+        </div>
+    </div>
+</div>
+<div class="dashboard-definition">
+    <div class="box box-theme">
+        <div class="box-header with-border">
+            <h3 class="box-title">Dashboard Definition</h3>
+        </div>
+        <div class="box-body dashboard-box">
+            <div ng-if="rootModel.dashboards.length == 0">
+                <h5 class="empty-list-section">Add Dashboard</h5>
+            </div>
+            <div class="row" ng-if="rootModel.dashboards.length > 0">
+                <div class="col col-xs-2 col-sm-4 col-lg-4" ng-repeat="dashboardContents in rootModel.dashboards track by $index">
+                    <div class="small-box bg-theme">
+                        <div class="dashboard-item">
+                            <div class="inner">
+                                <p>Title: {{dashboardContents.title}}</p>
+                                <p>Show Count: {{dashboardContents.showCount}}</p>
+                                <p>Box Set: {{dashboardContents.boxSet}}</p>
+                            </div>
+                            <div class="small-box-footer">
+                                <span title="Edit Dashboard" class="fa fa-pencil-square-o edit-dashboard-icon" ng-click="editDashboard($event,$index)"></span>
+                                <span title="Remove Dashboard" class="fa fa-times remove-dashboard-icon" ng-click="removeDashboard($event,$index)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-add-section">
+                <div class="schema-form-section">
+                    <hr>
+                </div>
+                <div>
+                    <button ng-click="newDashboard()" class="btn btn-theme"> <i class="fa fa-plus"></i> Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stage Addtion Modal -->
+<script type="text/ng-template" id="modalContent.html">
+    <style>
+        input[type=text]{
+            border-left: none !important;
+            border-top: none !important;
+            border-right: none !important;
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input:focus{
+            outline: none;
+        }
+        .stage-body{
+            display: grid;
+            /*grid-row-gap: 1rem;*/
+        }
+        .stage-field{
+            display: grid;
+            grid-template-columns: 1.5fr 4fr;
+            grid-column-gap: 1.5rem;
+        }
+        .stage-input-field{
+            margin-bottom: 0px;
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .submit-button{
+            margin-top: 1rem;
+            margin-left: 4rem;
+        }
+    </style>
+    <div class="modal-contents">
+        <div class="modal-header">
+            <h3>{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="stage-body">
+                <div class="stage-field stage-name-field">
+                    <label class="stage-input-field">Stage Name</label>
+                    <input type="text" name="stageName" class="stage-name" ng-model="dialogData.name" required>
+                </div>
+                <div class="stage-field code-field">
+                    <label class="stage-input-field">Code</label>
+                    <input type="text" name="order" class="code" ng-model="dialogData.code" required>
+                </div>
+                <div class="stage-field order-field">
+                    <label class="stage-input-field">Order</label>
+                    <input type="text" name="order" class="order" ng-model="dialogData.order" required>
+                </div>
+                <div class="stage-field account-field">
+                    <label class="stage-input-field">Is Account Opening</label>
+                    <input type="text" name="order" class="account" ng-model="dialogData.isAccountOpening" required>
+                </div>
+                <div>
+                    <!-- [] is a main stage -->
+                </div>
+                <div class="submit-button">
+                    <button type="submit" class="btn btn-primary" ng-click="submitStageDetails()">Submit</button>
+                </div>
+                <div ng-show="isDuplicateMessage">
+                    <p>{{isDuplicateMessage}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</script>
+
+<!--UI Route Addition Modal-->
+<script type="text/ng-template" id="entityModal.html">
+    <style>
+        input[type=text],
+        select{
+            border-left: none !important;
+            border-top: none !important;
+            border-right: none !important;
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input:focus,
+        select:focus{
+            outline: none;
+        }
+        .entity-queue-choice>input[type=text],
+        .entity-detail-choice>input[type=text]{
+            cursor: pointer;
+        }
+        .entity-choice{
+            display: grid;
+            grid-template-columns: 0.5fr;
+            grid-row-gap: 0.5rem;
+            justify-content: center;
+        }
+        .entity-field{
+            display: grid;
+            /*grid-row-gap: 1rem;*/
+        }
+        .entity-route-details,
+        .select-entity-type{
+            display: grid;
+            grid-template-columns: 1.5fr 4fr;
+            grid-column-gap: 1.5rem;
+        }
+        .entity-input-field,
+        .select-entity-name{
+            margin-bottom: 0px;
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .select-page-type{
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .submit-button{
+            margin-top: 1rem;
+            margin-left: 4rem;
+        }
+        /* .select-entity-radio{
+            display: grid;
+            grid-template-columns: 0.15fr 0.4fr 0.15fr 2fr;
+            padding-top: 0.5rem;
+        } */
+    </style>
+    <div class="modal-contents">
+        <div class="modal-header">
+            <h3>{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="entity-field">
+                <div class="entity-route-details">
+                    <label class="entity-input-field">Route Name</label>
+                    <input type="text" name="routeName" ng-model="entityData.routeName">
+                </div>
+                <div class="entity-route-details">
+                    <label class="entity-input-field">Route Path</label>
+                    <input type="text" name="routePath" ng-model="entityData.routePath">
+                </div>
+                <div class="select-entity-type">
+                    <label class="select-page-type">Entity Type </label>
+                    <div class="select-entity-name">
+                        <!-- <input type="radio" id="entityType1" name="queue" value="Queue" ng-model="entityData.type">
+                        <label for="entityType1">Queue</label>
+                        <input type="radio" id="entityType2" name="detail" value="Detail" ng-model="entityData.type">
+                        <label for="entityType2">Detail</label> -->
+                        <select ng-model="entityData.name" name="entity">
+                            <option value="">Choose Entity</option>
+                            <option value="Generic Queue">Generic Queue</option>
+                            <option value="Generic Lead">Generic Lead</option>
+                            <option value="Generic Enrollement">Generic Enrollement</option>
+                            <option value="Generic Loan Request">Generic Loan Request</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="submit-button">
+                    <button type="submit" class="btn btn-primary" ng-click="submitEntityDetails()">Submit</button>
+                </div>
+                <!-- <div class="entity-section" ng-show="entityData.type">
+                    <hr>
+                </div> -->
+                <!-- <div class="entity-choice" ng-show="entityData.type == 'Queue'">
+                    <div class="entity-queue-choice">
+                        <input type="text" ng-readonly="true" ng-model="queue[0]" ng-click="closeModal(queue[0])"/>
+                    </div>
+                </div> -->
+                <!-- <div class="entity-choice" ng-show="entityData.type == 'Detail'">
+                    <div class="entity-detail-choice">
+                        <input type="text" ng-readonly="true" ng-model="detail[0]" ng-click="closeModal(detail[0])" />
+                    </div>
+                    <div class="entity-detail-choice">
+                        <input type="text" ng-readonly="true" ng-model="detail[1]" ng-click="closeModal(detail[1])"/>
+                    </div>
+                    <div class="entity-detail-choice">
+                        <input type="text" ng-readonly="true" ng-model="detail[2]" ng-click="closeModal(detail[2])" />
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</script>
+
+<!--Dashboard Addition Modal-->
+<script type="text/ng-template" id="dashboardModal.html">
+    <style>
+        input[type=text]{
+            border-left: none !important;
+            border-top: none !important;
+            border-right: none !important;
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input:focus{
+            outline: none;
+        }
+        .dashboard-choice{
+            display: grid;
+        }
+        .dashboard-box-set,
+        .dashboard-title{
+            display: grid;
+            grid-template-columns: 0.1fr 0.4fr;
+            grid-column-gap: 2rem;
+        }
+        .dashboard-options{
+            display: grid;
+            grid-template-columns: 1.5fr 4fr;
+            grid-column-gap: 1.5rem;
+        }
+        .dashboard-field{
+            margin-bottom: 0px;
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .select-show-count{
+            display: grid;
+            grid-template-columns: 1.5fr 4fr;
+            grid-column-gap: 1.5rem;
+        }
+        .show-count-field{
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .show-count-radio{
+            display: grid;
+            grid-template-columns: 0.15fr 0.4fr 0.15fr 2fr;
+            padding-top: 0.5rem;
+        }
+        .submit-button{
+            margin-top: 1rem;
+            margin-left: 4rem;
+        }
+    </style>
+    <div class="modal-contents">
+        <div class="modal-header">
+            <h3>{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="dashboard-choice">
+                <div class="dashboard-options dashboard-title">
+                    <label class="dashboard-field">Title </label>
+                    <input type="text" name="dashboardTitle" class="dashboard-title" ng-model="entityData.title" required>
+                </div>
+                <div class="select-show-count">
+                    <label class="show-count-field">Show Count </label>
+                    <div class="show-count-radio">
+                        <input type="radio" id="choiceType1" name="show-count-yes" value="Yes" ng-model="entityData.showCount">
+                        <label for="choiceType1">YES</label>
+                        <input type="radio" id="choiceType2" name="show-count-no" value="No" ng-model="entityData.showCount">
+                        <label for="choiceType2">NO</label>
+                    </div>
+                </div>
+                <div class="dashboard-options dashboard-box-set">
+                    <label class="dashboard-field">Box Set </label>
+                    <input type="text" name="dashboardBoxSet" class="dashboard-box-set" ng-model="entityData.boxSet" required>
+                </div>
+                <div class="submit-button">
+                    <button class="btn btn-primary" ng-click="submitDashboardDetails()">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</script>

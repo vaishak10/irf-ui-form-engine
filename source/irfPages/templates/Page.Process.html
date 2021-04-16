@@ -1,0 +1,177 @@
+<style>
+    input[type=text],
+    select{
+        border-left: none !important;
+        border-top: none !important;
+        border-right: none !important;
+        border: 1px solid #ccc;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    input:focus,
+    select:focus{
+        outline: none;
+    }
+    .process-heading>h1 {
+        font-size: 20px;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+        padding-left: 15px;
+    }
+    .box{
+        margin-left: 15px;
+        width: 97%;
+    }
+    .vertical-section > hr{
+        display: grid;
+        border-right: 1px solid lightblue;
+        height: 80px;
+        /* padding-left: 2rem; */
+    }
+    .export_div{
+        position: relative;
+    }
+    .export_btn{
+        position: absolute;
+        right: 20px;
+    }
+    .process-content{
+        display: grid;
+        grid-template-columns: 5fr 1fr 5fr;
+        /* justify-content: center; */
+        /* align-content: center; */
+        justify-items: center;
+        align-items: center;
+        /* grid-column-gap: 4rem;*/
+    }
+    .process-body{
+        display: grid;
+        /*padding-left: 25px;*/
+    }
+    .process-options {
+        display: grid;
+        grid-template-columns: 1fr 3.5fr;
+        grid-column-gap: 1.5rem;
+    }
+    .process-import{
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        /* justify-items: center; */
+        grid-column-gap: 1rem;
+        /* padding-left: 20px; */
+    }
+    .process-action {
+        padding: 10px;
+    }
+    .process-type-field,
+    .process-name-field{
+        margin-bottom: 0px;
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+    /* .btn-xs{
+        font-size: 14px;
+        margin-top:-3px;
+        margin-left:-7px;
+        padding: 1px 5px;
+        line-height: 1.5;
+        height: 2rem;
+        width: 7rem;
+    } */
+    .process-import>input[type="file"] {
+        display: none;
+    }
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+    .custom-file-upload:hover {
+        color: #fff;
+        background-color: #367fa9;
+        border-color: #204d74;
+    }
+    .custom-file-upload:active {
+        /* margin: 1px 1px 0;
+        box-shadow: -1px -1px 1px #000; */
+        /* -webkit-box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%); */
+        border:1px double #fff;
+        box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%);
+    }
+    .btn-upload{
+        width: 150px;
+        height: 34px;
+        color: #fff;
+        background-color: #3c8dbc;
+        border-color: #367fa9;
+        box-shadow: 0 12px 12px -9px rgb(0 0 0 / 56%);
+        font-size: 14px;
+        border-radius: 3px;
+        padding: 6px 32px;
+        /* line-height: 1.5; */
+        margin-top: -5px;
+        border: 1px solid transparent;
+    }
+</style>
+
+<div class="process-design">
+    <div class="process-heading">
+        <h1>Process Details</h1>
+    </div>
+    <div class="box box-theme">
+        <div class="box-header with-border">
+            <h3 class="box-title">Process</h3>
+        </div>
+        <div class="box-body form-horizontal">
+            <div class="process-content">
+                <div class="process-body">
+                    <div class="process-options select-process-type">
+                        <label class="process-type-field" for="processType">Process Type</label>
+                        <select ng-model="data.processType" name="processType">
+                            <option value="">Choose process type</option>
+                            <option value="Loan">Loan</option>
+                            <option value="Lead">Lead</option>
+                        </select>
+                    </div>
+                    <div class="process-options process-name">
+                        <label class="process-name-field" for="processName">Process Name</label>
+                        <input type="text" ng-model="data.processName" name="processName">
+                    </div>
+                </div>
+                <div class="vertical-section">
+                    <hr>
+                </div>
+                <div class="process-import">
+                    <label for="file">Import file:</label>
+                    <!-- <input type="file" id="choose-file" name="file" read-file="validateContent($fileContent)"> -->
+                    <!-- <button class="btn btn-theme btn-xs" read-file="validateContent($fileContent)">
+                        <i class="fa fa-file"></i>
+                        Choose File
+                    </button> -->
+                    <label for="file-upload" class="custom-file-upload btn-upload">
+                        <i class="fa fa-file"></i> Choose File
+                    </label>
+                    <input id="file-upload" type="file" read-file="validateContent($fileContent)"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-theme">
+        <div class="process-action submit-button">
+            <button class="btn btn-theme btn-primary" ng-click="goToEditor()">Submit</button>
+        </div>
+        <!-- <div class="display-json" ng-if="content">
+            <h3>JSON content:</h3>
+            <pre>{{ content }}</pre>
+        </div> -->
+    </div>
+    <div ui-view="body"></div>
+</div>
