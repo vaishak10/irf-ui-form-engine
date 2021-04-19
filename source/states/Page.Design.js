@@ -1,4 +1,4 @@
-var irfUiFormEngine = angular.module("uiFormEngine")
+var irfUiFormEngine = angular.module("uiFormEngine",[]);
 
 irfUiFormEngine.config([
 	"$stateProvider", "$urlRouterProvider",
