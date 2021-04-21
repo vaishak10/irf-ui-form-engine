@@ -1,5 +1,4 @@
-angular.module('irf.process', ['irf.ui.form.engine'])
-.directive('readFile', function ($parse) {
+irfUiFormEngine.directive('readFile', function ($parse) {
 	return {
 		link: function(scope, element, attrs) {
             var fn = $parse(attrs.readFile);

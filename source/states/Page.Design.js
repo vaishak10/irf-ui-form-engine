@@ -1,5 +1,6 @@
-angular.module('irf.design', ['irf.ui.form.engine'])
-.config([
+var irfUiFormEngine = angular.module("uiFormEngine",[]);
+
+irfUiFormEngine.config([
 	"$stateProvider", "$urlRouterProvider",
 	function($stateProvider, $urlRouterProvider) {
         // https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states
@@ -50,12 +51,11 @@ angular.module('irf.design', ['irf.ui.form.engine'])
                 saveTemplateAsFile("ServerJson."+$scope.data.processType+"-"+$scope.data.processName+".json",JSON.stringify(convert2serverJson($scope.data),null,"\t"));
             }
         }})
-        .state({name:'Page.Design.Process.Home',  url: '/Home',   templateUrl: 'modules/irfpages/templates/pages/Page.Process.html',controller: 'ProcessCtrl'})
-        .state({name:'Page.Design.Process.Editor',url: '/Editor', templateUrl: 'modules/irfpages/templates/pages/Page.Editor.html', controller: 'EditorCtrl' })
-        .state({name:'Page.Design.Process.Stage', url: '/Stage',  templateUrl: 'modules/irfpages/templates/pages/Page.Stage.html',  controller: 'StageCtrl'  })
-        .state({name:'Page.Design.Process.UIEntity', url: '/UIEntity',  templateUrl: 'modules/irfpages/templates/pages/Page.UIEntity.html',  controller: 'UIEntityCtrl'  })
-        .state({name:'Page.Design.Process.Config', url: '/Config',  templateUrl: 'modules/irfpages/templates/pages/Page.Config.html',  controller: 'ConfigCtrl'  })
-
+        .state({name:'Page.Design.Process.Home',  url: '/Home',   templateUrl: 'bower_components/irf-ui-form-engine/source/templates/Page.Process.html',controller: 'ProcessCtrl'})
+        .state({name:'Page.Design.Process.Editor',url: '/Editor', templateUrl: 'bower_components/irf-ui-form-engine/source/templates/Page.Editor.html', controller: 'EditorCtrl' })
+        .state({name:'Page.Design.Process.Stage', url: '/Stage',  templateUrl: 'bower_components/irf-ui-form-engine/source/templates/Page.Stage.html',  controller: 'StageCtrl'  })
+        .state({name:'Page.Design.Process.UIEntity', url: '/UIEntity',  templateUrl: 'bower_components/irf-ui-form-engine/source/templates/Page.UIEntity.html',  controller: 'UIEntityCtrl'  })
+        .state({name:'Page.Design.Process.Config', url: '/Config',  templateUrl: 'bower_components/irf-ui-form-engine/source/templates/Page.Config.html',  controller: 'ConfigCtrl'  })
 
 }]);
 
