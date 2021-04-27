@@ -14,6 +14,6 @@ export abstract class AbstractQueueDefinition extends AbstractEntityDefinition{
 export class GenericQueueDefinition extends AbstractQueueDefinition{
     constructor(data: Partial<AbstractQueueDefinition> = {}) {
         super();
-        Object.assign(this, data);
+        (<any>Object).assign(this, data);
     }
 }

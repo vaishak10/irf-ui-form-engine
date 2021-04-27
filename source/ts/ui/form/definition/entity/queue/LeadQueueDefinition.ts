@@ -18,5 +18,5 @@ export class LeadQueueDefinition extends GenericQueueDefinition{
 							"title": "CITY/_TOWN_VILLAGE",
 							"type": "string"
 						}
-					},;
+					};
 }

@@ -9,6 +9,6 @@ export abstract class AbstractDetailDefinition extends AbstractEntityDefinition{
 export class GenericDetailDefinition extends AbstractDetailDefinition{
     constructor(data: Partial<AbstractDetailDefinition> = {}) {
         super();
-        Object.assign(this, data);
+        (<any>Object).assign(this, data);
     }
 }

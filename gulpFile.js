@@ -10,7 +10,10 @@ gulp.task('tsScripts', function() {
             target: "es5",
             experimentalDecorators: true,
             removeComments: false,
-            noEmitOnError: true
+            noEmitOnError: true,
+            lib: [
+                "es2015"
+            ]
         }))
         .pipe(gulp.dest('./source/tsjs'));
 });
