@@ -1,0 +1,28 @@
+{
+  "name": "irf-ui-form-engine",
+  "version": "1.0.0",
+  "description": "A simple angular module",
+  "main": "gulpFile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaishak10/irf-ui-form-engine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaishak10/irf-ui-form-engine/issues"
+  },
+  "homepage": "https://github.com/vaishak10/irf-ui-form-engine#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.168",
+    "@types/rx": "^4.1.2",
+    "bower": "^1.8.12",
+    "g": "^2.0.1",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "typescript": "^4.2.4"
+  }
+}
