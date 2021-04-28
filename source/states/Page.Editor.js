@@ -48,7 +48,7 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
 
         $scope.newStage = function () {
             var modalInstance = $uibModal.open({
-                templateUrl: "modalContent.html",
+                templateUrl: "bower_components/irf-ui-form-engine/source/templates/modalContent.html",
                 controller: "ModalContentCtrl",
                 resolve: {
                     model: function () {
@@ -84,7 +84,7 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
 
         $scope.newEntity = function () {
             var modalInstance = $uibModal.open({
-                templateUrl: "entityModal.html",
+                templateUrl: "bower_components/irf-ui-form-engine/source/templates/entityModal.html",
                 controller: "EntityContentCtrl",
                 resolve: {
                     model: function () {
@@ -105,7 +105,7 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
 
         $scope.newDashboard = function () {
             var modalInstance = $uibModal.open({
-                templateUrl: "dashboardModal.html",
+                templateUrl: "bower_components/irf-ui-form-engine/source/templates/dashboardModal.html",
                 controller: "DashboardContentCtrl",
                 resolve: {
                     model: function () {
@@ -163,50 +163,4 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
         }
 
     }
-]).controller('ModalContentCtrl', function ($scope, $uibModalInstance, model) {
-
-    $scope.dialogData = {};
-    $scope.isDuplicateMessage = "";
-    $scope.title = model.title;
-
-    $scope.submitStageDetails = function () {
-        model.addStage($scope.dialogData);
-        if (!model.isDuplicateStages()) {
-            $scope.$close();
-        }
-        else {
-            $scope.isDuplicateMessage = `${$scope.dialogData.name} already exists!!!`;
-            model.removeDuplicates();
-        }
-    };
-
-    $scope.cancel = function () {
-        $scope.$close();
-    }
-}).controller('EntityContentCtrl', function ($scope, $uibModalInstance, model) {
-    $scope.entityData = {};
-    $scope.title = model.title;
-
-
-
-    $scope.submitEntityDetails = function() {
-        model.addEntity($scope.entityData);
-        $scope.$close();
-    }
-
-    $scope.cancel = function () {
-        $scope.$close();
-    }
-}).controller('DashboardContentCtrl', function ($scope, $uibModalInstance, model) {
-    $scope.entityData = {};
-    $scope.title = model.title;
-
-    $scope.submitDashboardDetails = function() {
-        model.addDashboard($scope.entityData);
-        $scope.$close();
-    }
-
-    $scope.cancel = function () {
-        $scope.$close();
-    }
-})
+]);
