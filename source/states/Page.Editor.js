@@ -48,7 +48,7 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
 
         $scope.newStage = function () {
             var modalInstance = $uibModal.open({
-                templateUrl: "bower_components/irf-ui-form-engine/source/templates/modalContent.html",
+                templateUrl: "modalContent.html",
                 controller: "ModalContentCtrl",
                 resolve: {
                     model: function () {
