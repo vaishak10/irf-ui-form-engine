@@ -1,55 +1,18 @@
 irfUiFormEngine.controller("UIEntityCtrl",["$log", "$scope", "$state", "$stateParams","$q", "irfNavigator","$compile","PageHelper",
 function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelper) {
 
-    // console.log($scope.data);
-    // $scope.rootModel = $scope.data;
-    // $scope.rootModel.stages[$scope.data.stageIndex].entities[$scope.data.entityIndex] = $scope.rootModel.stages[$scope.data.stageIndex].entities[$scope.data.entityIndex] || [];
-    console.log($scope.data);
-    $scope.rootModel = $scope.data || {entities:[]};
-    $scope.rootModel.entities[$scope.data.entityIndex] = $scope.rootModel.entities[$scope.data.entityIndex] || [];
-    var entity = "GenericLead";
-    if($scope.rootModel && $scope.rootModel.entities && $scope.rootModel.entities[$scope.data.entityIndex].name == "Generic Queue"){
-        entity = "GenericQueue";
-    }
-    $scope.selectedEntity = $scope.rootModel.entities[$scope.data.entityIndex];
-    $scope.selectedEntity.entityConfig = $scope.selectedEntity.entityConfig || {};
-    $scope.entityConfig = $scope.selectedEntity.entityConfig;
 
-    // var pageDefPath = "perdix/ui/uientity/UIEntityRegistry";
-    // require([pageDefPath], function(tsObject) {
+    var currentEntity    = $scope.data.routes[$scope.data.entityIndex].name;
+    $scope.selectedRoute = $scope.data.routes[$scope.data.entityIndex];
+    $scope.entityConfig     = $scope.data.uiEntities[currentEntity].getConfig();
+    $scope.entityTemplate   = $scope.data.uiEntities[currentEntity].getRenderer();
+    $scope.entityDefinition = $scope.data.uiEntities[currentEntity].getDefinition($scope.selectedRoute.entityDefinition);
 
-    // approach 1 : direct html from getRenderer()
-        // var container = document.getElementById("uiEntityContainer")
-        // var htmlcontent = tsObject.uiEntites.get("GenericLead").getRenderer();
-        // $compile(htmlcontent,($scope));
-        // container.innerHTML = (htmlcontent);
-
-        // approach 2 : directive from getRenderer()
-        var container   = document.getElementById("uiEntityContainer");
-        var htmlContent = $scope.rootModel.uiEntities.get(entity).getRenderer();
-        // var entityObj = tsObject.uiEntites.get(entity).getConfigDefinition();
-        var content = $compile(htmlContent)($scope);
-        // // var newScope = $scope.$new(true);
-        // // newScope.entity = $scope.entityConfig;
-        container.append(content[0]);
-        // $scope.$watch((scope) => {return scope.entityConfig},(nv,ov)=>{
-        //     $scope.rootModel.entities[$scope.data.entityIndex].entityConfig = nv;
-        // },true)
-    // approach 3 : html file and load dynamically
-        // var container = document.getElementById("uiEntityContainer");
-        // var htmlContentUrl = tsObject.uiEntites.get("GenericQueue").getRenderer();
-        // fetch(htmlContentUrl /*, options */)
-        //     .then((response) => response.text())
-        //     .then((html) => {
-        //         container.innerHTML = html;
-        //     })
-        //     .catch((error) => {
-        //         console.warn(error);
-        //     });
-    // },function(err){
-    //     $log.info("[REQUIRE] Error loading page(" + pageDefPath + ")");
-    //     $log.error(err);
-    // });
+    $scope.data.routes[$scope.data.entityIndex].entityDefinition = $scope.entityDefinition;
+    var container   = document.getElementById("uiEntityContainer");
+    var content = $compile($scope.entityTemplate)($scope);
+    container.append(content[0]);
+    
     var processJson = {
         "leadProfile":{
            "type":"box",
@@ -592,52 +555,9 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelpe
     $scope.onLoad = function (instance) {
         instance.expandAll();
     };
-
-    // $scope.changeData = function () {
-    //     $scope.obj.data = {foo: 'bar'};
-    // };
-
     $scope.changeOptions = function () {
         $scope.obj.options.mode = $scope.obj.options.mode == 'tree' ? 'code' : 'tree';
     };
-
-    //method1: Diff of newObj and oldObj
-    // var diff = function (obj1, obj2) {
-    //     const result = {};
-    //     if (Object.is(obj1, obj2)) {
-    //         return undefined;
-    //     }
-    //     if (!obj2 || typeof obj2 !== 'object') {
-    //         return obj2;
-    //     }
-    //     Object.keys(obj1 || {}).concat(Object.keys(obj2 || {})).forEach(key => {
-    //         if(obj2[key] !== obj1[key] && !Object.is(obj1[key], obj2[key])) {
-    //             result[key] = obj2[key];
-    //         }
-    //         if(typeof obj2[key] === 'object' && typeof obj1[key] === 'object') {
-    //             const value = diff(obj1[key], obj2[key]);
-    //             if (value !== undefined) {
-    //                 result[key] = value;
-    //             }
-    //         }
-    //     });
-    //     return result;
-    // };  
-
-    //method 2: Diff of newObj and oldObj
-    // var filter = function(obj1, obj2) {
-    //     var result = {};
-    //     for(key in obj1) {
-    //         if(obj2[key] != obj1[key]) result[key] = obj2[key];
-    //         if(typeof obj2[key] == 'array' && typeof obj1[key] == 'array') 
-    //             result[key] = arguments.callee(obj1[key], obj2[key]);
-    //         if(typeof obj2[key] == 'object' && typeof obj1[key] == 'object') 
-    //             result[key] = arguments.callee(obj1[key], obj2[key]);
-    //     }
-    //     return result;
-    // };
-
-    //Method 3:
     var isEmptyObject = function(obj) {
         var name;
         for (name in obj) {
@@ -671,6 +591,38 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelpe
     //other
     $scope.pretty = function (obj) {
         return angular.toJson(obj, true);
+    }
+
+    $scope.newConfig = () => {
+        var modalInstance = $uibModal.open({
+            templateUrl: "configModal.html",
+            controller: "configCtrl",
+            resolve: {
+                model: function () {
+                    return {
+                        addConfig:addConfig,
+                        title: "Add Dashboard"
+                    };
+                }
+            }
+        });
+    };
+    $scope.editConfig = ($index) => {
+        $scope.data.configIndex = $index;
+        $scope.data.selectedEntity = $scope.entityDefinition;
+        irfNavigator.go({
+            "state": 'Page.Design.Process.Config',
+            "pageId": null,
+            "pageData": {test:{}}
+        });
+        
+    };
+    $scope.removeConfig = ($index) => {
+        $scope.entityDefinition.config.splice($index,1);
+    };
+    var addConfig = function (dashboardContent) {
+        $scope.entityDefinition.config.push(dashboardContent);
+        return 0;
     }
 
 }]).directive('jsonEditor', function(){
