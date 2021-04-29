@@ -5,7 +5,30 @@ irfUiFormEngine.directive("genericQueue",function(){
             entity : "=",
         },
         replace: false,
-        templateUrl:'bower_components/irf-ui-form-engine/source/templates/GenericQueue.html',
+        template: `
+            <div class="box box-theme" style="margin-bottom:600px">
+            <div class="box-header with-border">
+                <h3 class="box-title">Entity Information</h3>
+            </div>
+            <div class="box-body entity-info-box form-horizontal">
+                <div class="config-section">
+                    <hr>
+                </div>
+                <div>
+                    <div id="jsonEditorAnchor">
+                    <json-editor options="obj.options" json="obj.data" editor="editor"></json-editor>
+                    </div>
+                </div>
+                <div class="config-body">
+                    <div class="config-submit-section">
+                        <hr>
+                    </div>
+                    <div class="config-submit">
+                        <button ng-click="toConfig()" class="btn btn-theme">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div> `,
         // template: "<jsoneditor ng-model='json.data' options='jsoneditorOptions' json='json'></jsoneditor>",
         controller:"genericQueueCtrl"
     }
