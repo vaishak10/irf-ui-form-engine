@@ -89,4 +89,41 @@ irfUiFormEngine.directive("genericQueue",function(){
         $scope.entity.colDefinition.push($scope.tempDefSelected);
         $scope.tempDefSelected = null;
     }
-}]);
+}]).directive('jsonEditor', function(){
+    return {
+        scope: {
+            options: '=',
+            json: '=',
+            editor: '='
+        },
+        restrict: 'E',
+        transclude: false,
+        link: function (scope, element) {
+            var editor = null, defaultOptions = {
+                    mode: 'form',
+                    editable: false
+                },
+                options = angular.extend(defaultOptions, scope.options);
+
+            if(typeof(scope.options.change) === 'function'){
+                options.change = function(){
+                    //debugger;
+                    scope.json = editor.get();
+                    if(editor !== null){
+                        scope.options.change(editor.get());
+                    }
+                }
+            }
+
+            editor = new JSONEditor(element[0], options, scope.json);
+            scope.editor = editor;
+            scope.$watch(
+                'json',
+                function (newValue, oldValue) {
+                    //debugger;
+                    editor.set(newValue);                
+                }
+            );
+        }
+    };
+});
