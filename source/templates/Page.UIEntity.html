@@ -6,7 +6,7 @@
         border: 1px solid #ccc;
         width: 100%;
         height: 34px;
-        padding: 6px 12px;
+        padding: 6px 12px;`
         font-size: 14px;
         line-height: 1.42857143;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
@@ -161,4 +161,68 @@
     </div>
 </div> -->
 
+<script type="text/ng-template" id="configContent.html">
+    <style>
+        input[type=text]{
+            border-left: none !important;
+            border-top: none !important;
+            border-right: none !important;
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input:focus{
+            outline: none;
+        }
+        .stage-body{
+            display: grid;
+            /*grid-row-gap: 1rem;*/
+        }
+        .stage-field{
+            display: grid;
+            grid-template-columns: 1.5fr 4fr;
+            grid-column-gap: 1.5rem;
+        }
+        .stage-input-field{
+            margin-bottom: 0px;
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .submit-button{
+            margin-top: 1rem;
+            margin-left: 4rem;
+        }
+    </style>
+    <div class="modal-contents">
+        <div class="modal-header">
+            <h3>{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="stage-body">
+                <div class="stage-field stage-name-field">
+                    <label class="stage-input-field">Config Name</label>
+                    <input type="text" name="stageName" class="stage-name" ng-model="dialogData.name" required>
+                </div>
+                <div class="stage-field code-field">
+                    <label class="stage-input-field">Condition</label>
+                    <input type="text" name="order" class="code" ng-model="dialogData.code" required>
+                </div>
+                <div class="submit-button">
+                    <button type="submit" class="btn btn-primary" ng-click="submitConfigDetails()">Submit</button>
+                </div>
+                <div ng-show="isDuplicateMessage">
+                    <p>{{isDuplicateMessage}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</script>
 

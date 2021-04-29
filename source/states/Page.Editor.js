@@ -46,7 +46,7 @@ function ($log, $scope, $state, $stateParams, $uibModal, $q, irfNavigator) {
 
     $scope.newStage = function () {
         var modalInstance = $uibModal.open({
-            templateUrl: "bower_components/irf-ui-form-engine/source/templates/modalContent.html",
+            templateUrl: "modalContent.html",
             controller: "ModalContentCtrl",
             resolve: {
                 model: function () {
@@ -92,7 +92,7 @@ function ($log, $scope, $state, $stateParams, $uibModal, $q, irfNavigator) {
 
     $scope.newEntity = function () {
         var modalInstance = $uibModal.open({
-            templateUrl: "bower_components/irf-ui-form-engine/source/templates/entityModal.html",
+            templateUrl: "entityModal.html",
             controller: "EntityContentCtrl",
             resolve: {
                 model: function () {
@@ -114,7 +114,7 @@ function ($log, $scope, $state, $stateParams, $uibModal, $q, irfNavigator) {
 
     $scope.newDashboard = function () {
         var modalInstance = $uibModal.open({
-            templateUrl: "bower_components/irf-ui-form-engine/source/templates/dashboardModal.html",
+            templateUrl: "dashboardModal.html",
             controller: "DashboardContentCtrl",
             resolve: {
                 model: function () {

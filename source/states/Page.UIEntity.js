@@ -595,7 +595,7 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelpe
 
     $scope.newConfig = () => {
         var modalInstance = $uibModal.open({
-            templateUrl: "bower_components/irf-ui-form-engine/source/templates/configModal.html",
+            templateUrl: "configModal.html",
             controller: "configCtrl",
             resolve: {
                 model: function () {
