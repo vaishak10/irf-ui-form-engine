@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var ts = require('gulp-typescript');
 
-gulp.task('tsScripts', function() {
+gulp.task('build', function() {
     return gulp.src('./source/**/*.ts')
         .pipe(ts({
             noImplicitAny: false,
