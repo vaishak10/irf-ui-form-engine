@@ -26,7 +26,7 @@ function($log, $scope, $state, $stateParams, $q, $uibModal, irfNavigator) {
 
     $scope.open = function () {
         var modalInstance = $uibModal.open({
-            templateUrl: "entityModal.html",
+            templateUrl: "bower_components/irf-ui-form-engine/source/templates/entityModalV2.html",
             controller: "EntityContentCtrl",
             resolve: {
                 model: function () {
