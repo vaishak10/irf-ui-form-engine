@@ -17,7 +17,7 @@ irfUiFormEngine.directive('readFile', function ($parse) {
 function($log, $scope, $state, $stateParams, $q, irfNavigator,PageHelper) { 
     $scope.$parent.data = {};
     $scope.data = $scope.$parent.data; 
-    var pageDefPath = "perdix/Application/PerdixApplication";
+    var pageDefPath = "bower_components/irf-ui-form-engine/source/tsjs/ts/application/PerdixApplication";
     require([pageDefPath], function(tsObject) {
         console.log(tsObject);
         $scope.data.uiEntities = Object.fromEntries(tsObject.entityRegister.entites);
