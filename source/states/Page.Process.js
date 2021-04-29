@@ -17,9 +17,10 @@ irfUiFormEngine.directive('readFile', function ($parse) {
 function($log, $scope, $state, $stateParams, $q, irfNavigator,PageHelper) { 
     $scope.$parent.data = {};
     $scope.data = $scope.$parent.data; 
-    var pageDefPath = "perdix/ui/uientity/UIEntityRegistry";
+    var pageDefPath = "perdix/Application/PerdixApplication";
     require([pageDefPath], function(tsObject) {
-        $scope.data.uiEntities = tsObject.uiEntites;
+        console.log(tsObject);
+        $scope.data.uiEntities = Object.fromEntries(tsObject.entityRegister.entites);
     },function(err){
         console.log(err);
     })
@@ -63,7 +64,7 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,PageHelper) {
             $scope.data.processName = $scope.parsedContent.processName;
             $scope.data.processType = $scope.parsedContent.processType;
             $scope.data.stages = $scope.parsedContent.stages;
-            $scope.data.entities = $scope.parsedContent.entities;
+            $scope.data.routes = $scope.parsedContent.routes;
             $scope.data.dashboards = $scope.parsedContent.dashboards;
             PageHelper.showProgress("process","Successfully Loaded the File",5000);
             // $scope.goToEditor();

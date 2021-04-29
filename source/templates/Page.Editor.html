@@ -214,11 +214,11 @@
         </div>
         <div class="box-body stage-box form-horizontal">
             <div>
-                <div ng-if="rootModel.stages.length == 0">
+                <div ng-if="data.stages.length == 0">
                     <h5 class="empty-list-section">Add a Stage</h5>
                 </div>
-                <div ng-if="rootModel.stages.length > 0" class="stages-list">
-                    <div class="stage-item {{stage.class}}" ng-click="selectStage($event,$index)" ng-repeat="stage in rootModel.stages track by $index">
+                <div ng-if="data.stages.length > 0" class="stages-list">
+                    <div class="stage-item {{stage.class}}" ng-click="selectStage($event,$index)" ng-repeat="stage in data.stages track by $index">
                         {{stage.name}} 
                         <div class="icon">
                             <span title="Edit stage" class="fa fa-pencil stage-edit" ng-click=editStage($event,$index)></span>
@@ -245,11 +245,11 @@
             <h3 class="box-title">UI Routes</h3>
         </div>
         <div class="box-body ui-route-box">
-            <div ng-if="rootModel.entities.length == 0">
+            <div ng-if="data.routes.length == 0">
                 <h5 class="empty-list-section">Add UI entity Routes</h5>
             </div>
-            <div ng-if="rootModel.entities.length > 0" class="entity-list">
-                <div class="entity-item {{entity.class}}" ng-click="selectEntity($event,$index)" ng-repeat="entity in rootModel.entities track by $index">
+            <div ng-if="data.routes.length > 0" class="entity-list">
+                <div class="entity-item {{entity.class}}" ng-click="selectEntity($event,$index)" ng-repeat="entity in data.routes track by $index">
                     <p>{{entity.routeName}} | <mark class="gray">{{entity.routePath}}</mark></p>
                     <div class="icon">
                         <span title="Edit Entity" class="fa fa-pencil entity-edit" ng-click=editEntity($event,$index)></span>
@@ -265,25 +265,25 @@
                     <button ng-click="newEntity()" class="btn btn-theme"> <i class="fa fa-plus"></i> Add</button>
                 </div>
             </div>
-            <!-- <div class="row" ng-if="entities.detail.routeDetails.length > 0 || entities.queue.routeDetails.length > 0">
-                <div class="col col-xs-4 col-sm-2" ng-repeat="queue in entities.queue.routeDetails track by $index">
+            <!-- <div class="row" ng-if="routes.detail.routeDetails.length > 0 || routes.queue.routeDetails.length > 0">
+                <div class="col col-xs-4 col-sm-2" ng-repeat="queue in routes.queue.routeDetails track by $index">
                     <div class="small-box bg-theme">
                         <div class="entity-item">
                             <div class="inner">
                                 <h3><i class="fa fa-pencil-square-o" ng-click="editEntity($event,$index)"></i></h3>
                                 <p>ScreeingQueue</p>
-                                <p>{{entities.queue.type}}: {{queue.name}}</p>
+                                <p>{{routes.queue.type}}: {{queue.name}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col col-xs-4 col-sm-2" ng-repeat="detail in entities.detail.routeDetails  track by $index">
+                <div class="col col-xs-4 col-sm-2" ng-repeat="detail in routes.detail.routeDetails  track by $index">
                     <div class="small-box bg-theme">
                         <div class="entity-item">
                             <div class="inner">
                                 <h3><i class="fa fa-pencil-square-o" ng-click="editEntity($event,$index)"></i></h3>
                                 <p>ScreeingQueue- {{detail.path}}</p>
-                                <p>{{entities.detail.type}}: {{detail.name}}</p>
+                                <p>{{routes.detail.type}}: {{detail.name}}</p>
                             </div>
                         </div>
                     </div>
@@ -298,11 +298,11 @@
             <h3 class="box-title">Dashboard Definition</h3>
         </div>
         <div class="box-body dashboard-box">
-            <div ng-if="rootModel.dashboards.length == 0">
+            <div ng-if="data.dashboards.length == 0">
                 <h5 class="empty-list-section">Add Dashboard</h5>
             </div>
-            <div class="row" ng-if="rootModel.dashboards.length > 0">
-                <div class="col col-xs-2 col-sm-4 col-lg-4" ng-repeat="dashboardContents in rootModel.dashboards track by $index">
+            <div class="row" ng-if="data.dashboards.length > 0">
+                <div class="col col-xs-2 col-sm-4 col-lg-4" ng-repeat="dashboardContents in data.dashboards track by $index">
                     <div class="small-box bg-theme">
                         <div class="dashboard-item">
                             <div class="inner">
@@ -310,10 +310,10 @@
                                 <p>Show Count: {{dashboardContents.showCount}}</p>
                                 <p>Box Set: {{dashboardContents.boxSet}}</p>
                             </div>
-                            <div class="small-box-footer">
+                            <!-- <div class="small-box-footer">
                                 <span title="Edit Dashboard" class="fa fa-pencil-square-o edit-dashboard-icon" ng-click="editDashboard($event,$index)"></span>
                                 <span title="Remove Dashboard" class="fa fa-times remove-dashboard-icon" ng-click="removeDashboard($event,$index)"></span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -329,3 +329,4 @@
         </div>
     </div>
 </div>
+

@@ -1,6 +1,7 @@
 irfUiFormEngine.controller('EntityContentCtrl', function ($scope, $uibModalInstance, model) {
     $scope.entityData = {};
     $scope.title = model.title;
+    $scope.entites = model.entites;
 
 
 
