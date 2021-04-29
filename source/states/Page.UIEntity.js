@@ -625,41 +625,16 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelpe
         return 0;
     }
 
-}]).directive('jsonEditor', function(){
-    return {
-        scope: {
-            options: '=',
-            json: '=',
-            editor: '='
-        },
-        restrict: 'E',
-        transclude: false,
-        link: function (scope, element) {
-            var editor = null, defaultOptions = {
-                    mode: 'form',
-                    editable: false
-                },
-                options = angular.extend(defaultOptions, scope.options);
+}]).controller('configCtrl', function ($scope, $uibModalInstance, model) {
+    $scope.entityData = {};
+    $scope.title = model.title;
 
-            if(typeof(scope.options.change) === 'function'){
-                options.change = function(){
-                    //debugger;
-                    scope.json = editor.get();
-                    if(editor !== null){
-                        scope.options.change(editor.get());
-                    }
-                }
-            }
+    $scope.submitDashboardDetails = function() {
+        model.addConfig($scope.entityData);
+        $scope.$close();
+    }
 
-            editor = new JSONEditor(element[0], options, scope.json);
-            scope.editor = editor;
-            scope.$watch(
-                'json',
-                function (newValue, oldValue) {
-                    //debugger;
-                    editor.set(newValue);                
-                }
-            );
-        }
-    };
+    $scope.cancel = function () {
+        $scope.$close();
+    }
 });

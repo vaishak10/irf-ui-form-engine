@@ -172,4 +172,51 @@ function ($log, $scope, $state, $stateParams, $uibModal, $q, irfNavigator) {
     }
 
 }
-]);
+]).controller('ModalContentCtrl', function ($scope, $uibModalInstance, model) {
+
+    $scope.dialogData = {};
+    $scope.isDuplicateMessage = "";
+    $scope.title = model.title;
+
+    $scope.submitStageDetails = function () {
+        model.addStage($scope.dialogData);
+        if (!model.isDuplicateStages()) {
+            $scope.$close();
+        }
+        else {
+            $scope.isDuplicateMessage = `${$scope.dialogData.name} already exists!!!`;
+            model.removeDuplicates();
+        }
+    };
+
+    $scope.cancel = function () {
+        $scope.$close();
+    }
+}).controller('EntityContentCtrl', function ($scope, $uibModalInstance, model) {
+    $scope.entityData = {};
+    $scope.title = model.title;
+    $scope.entites = model.entites;
+
+
+
+    $scope.submitEntityDetails = function() {
+        model.addEntity($scope.entityData);
+        $scope.$close();
+    }
+
+    $scope.cancel = function () {
+        $scope.$close();
+    }
+}).controller('DashboardContentCtrl', function ($scope, $uibModalInstance, model) {
+    $scope.entityData = {};
+    $scope.title = model.title;
+
+    $scope.submitDashboardDetails = function() {
+        model.addDashboard($scope.entityData);
+        $scope.$close();
+    }
+
+    $scope.cancel = function () {
+        $scope.$close();
+    }
+});
