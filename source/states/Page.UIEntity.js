@@ -595,7 +595,7 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelpe
 
     $scope.newConfig = () => {
         var modalInstance = $uibModal.open({
-            templateUrl: "configModal.html",
+            templateUrl: "bower_components/irf-ui-form-engine/source/templates/configModal.html",
             controller: "configCtrl",
             resolve: {
                 model: function () {
@@ -625,16 +625,4 @@ function($log, $scope, $state, $stateParams, $q, irfNavigator,$compile,PageHelpe
         return 0;
     }
 
-}]).controller('configCtrl', function ($scope, $uibModalInstance, model) {
-    $scope.entityData = {};
-    $scope.title = model.title;
-
-    $scope.submitDashboardDetails = function() {
-        model.addConfig($scope.entityData);
-        $scope.$close();
-    }
-
-    $scope.cancel = function () {
-        $scope.$close();
-    }
-});
+}]);

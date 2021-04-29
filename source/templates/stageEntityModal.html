@@ -1,4 +1,3 @@
-<!-- Stage Addtion Modal -->
 <style>
     input[type=text] {
         border-left: none !important;
@@ -47,26 +46,15 @@
     <div class="modal-body">
         <div class="stage-body">
             <div class="stage-field stage-name-field">
-                <label class="stage-input-field">Stage Name</label>
+                <label class="stage-input-field">Config Name</label>
                 <input type="text" name="stageName" class="stage-name" ng-model="dialogData.name" required>
             </div>
             <div class="stage-field code-field">
-                <label class="stage-input-field">Code</label>
+                <label class="stage-input-field">Condition</label>
                 <input type="text" name="order" class="code" ng-model="dialogData.code" required>
             </div>
-            <div class="stage-field order-field">
-                <label class="stage-input-field">Order</label>
-                <input type="text" name="order" class="order" ng-model="dialogData.order" required>
-            </div>
-            <div class="stage-field account-field">
-                <label class="stage-input-field">Is Account Opening</label>
-                <input type="text" name="order" class="account" ng-model="dialogData.isAccountOpening" required>
-            </div>
-            <div>
-                <!-- [] is a main stage -->
-            </div>
             <div class="submit-button">
-                <button type="submit" class="btn btn-primary" ng-click="submitStageDetails()">Submit</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitConfigDetails()">Submit</button>
             </div>
             <div ng-show="isDuplicateMessage">
                 <p>{{isDuplicateMessage}}</p>
