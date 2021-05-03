@@ -120,7 +120,8 @@ function ($log, $scope, $state, $stateParams, $uibModal, $q, irfNavigator) {
                 model: function () {
                     return {
                         addDashboard:addDashboard,
-                        title: "Add Dashboard"
+                        title: "Add Dashboard",
+                        routes: $scope.data.routes
                     };
                 }
             }
