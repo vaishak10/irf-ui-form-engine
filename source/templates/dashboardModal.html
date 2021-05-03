@@ -13,7 +13,21 @@
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
 
-    input:focus {
+    select {
+        border-left: none !important;
+        border-top: none !important;
+        border-right: none !important;
+        border: 1px solid #ccc;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    input:focus,
+    select:focus {
         outline: none;
     }
 
