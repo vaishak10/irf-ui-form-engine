@@ -10,21 +10,21 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
             $scope.data.stages.push(stage);
         }
 
-        var isDuplicateStages = function () {
+    var isDuplicateStages = function () {
 
             //array which consists of only name property from data.stage
             var valueArr = $scope.data.stages.map(function (item) {
                 return item.name
             });
 
-            //Checks if there are duplicate elements in the array
-            //If duplicate elements are present returns true, else false
-            var isDuplicate = valueArr.some(function (item, index) {
-                return valueArr.indexOf(item) != index
-            });
+        //Checks if there are duplicate elements in the array
+        //If duplicate elements are present returns true, else false
+        var isDuplicate = valueArr.some(function (item, index) {
+            return valueArr.indexOf(item) != index
+        });
 
-            return isDuplicate;
-        }
+        return isDuplicate;
+    }
 
         var removeDuplicates = function () {
             //removes the duplicate stage from data.stages based on name 
@@ -40,9 +40,9 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
             });
         }
 
-        $scope.removeStage = function($event,$index){
-            $scope.data.stages.splice($index,1);
-        }
+    $scope.removeStage = function($event,$index){
+        $scope.data.stages.splice($index,1);
+    }
 
         $scope.newStage = function () {
             var modalInstance = $uibModal.open({
@@ -58,78 +58,95 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
                         };
                     }
                 }
-            });
+                }
+            )
         };
+
+    //Entity manipulation functions and methods.
+    var addEntity = function (entity) {
+        entity.uuid = uuid();
+        $scope.data.routes.push(entity);
+        return 0;
+    }
+    function uuid(){
+        var dt = new Date().getTime();
+        var uuid = 'UIxxxEntityxxxxxxxRandomxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (dt + Math.random()*16)%16 | 0;
+            dt = Math.floor(dt/16);
+            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    }
 
         //Entity manipulation functions and methods.
-        var addEntity = function (entity) {
-            entity.uuid = uuid();
-            $scope.data.routes.push(entity);
-            return 0;
-        }
-        function uuid(){
-            var dt = new Date().getTime();
-            var uuid = 'UIxxxEntityxxxxxxxRandomxxxxx'.replace(/[xy]/g, function(c) {
-                var r = (dt + Math.random()*16)%16 | 0;
-                dt = Math.floor(dt/16);
-                return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-            });
-            return uuid;
-        }
-    
-        $scope.editEntity = function($event,$index){
-            $scope.data.entityIndex = $index;
-            irfNavigator.go({
-                "state": 'Page.Design.Process.UIEntity',
-                "pageId": null,
-                "pageData": {test:{}}
-            });
-        }
-    
-        $scope.removeEntity = function($event,$index){
-            $scope.data.routes.splice($index,1);
-        }
+    var addEntity = function (entity) {
+        entity.uuid = uuid();
+        $scope.data.routes.push(entity);
+        return 0;
+    }
+    function uuid(){
+        var dt = new Date().getTime();
+        var uuid = 'UIxxxEntityxxxxxxxRandomxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (dt + Math.random()*16)%16 | 0;
+            dt = Math.floor(dt/16);
+            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    }
 
-        $scope.newEntity = function () {
-            var modalInstance = $uibModal.open({
-                templateUrl: "entityModal.html",
-                controller: "EntityContentCtrl",
-                resolve: {
-                    model: function () {
-                        return {
-                            addEntity:addEntity,
-                            title: "Add Entity",
-                            entites: Object.keys($scope.data.uiEntities)
-                        };
-                    }
+    $scope.editEntity = function($event,$index){
+        $scope.data.entityIndex = $index;
+        irfNavigator.go({
+            "state": 'Page.Design.Process.UIEntity',
+            "pageId": null,
+            "pageData": {test:{}}
+        });
+    }
+
+    $scope.removeEntity = function($event,$index){
+        $scope.data.routes.splice($index,1);
+    }
+
+    $scope.newEntity = function () {
+        var modalInstance = $uibModal.open({
+            templateUrl: "entityModal.html",
+            controller: "EntityContentCtrl",
+            resolve: {
+                model: function () {
+                    return {
+                        addEntity:addEntity,
+                        title: "Add Entity",
+                        entites: Object.keys($scope.data.uiEntities)
+                    };
                 }
-            });
-        };
+            }
+        });
+    };
 
-        //Add Dashboards and manipulation function
-        var addDashboard = function (dashboardContent) {
-            $scope.data.dashboards.push(dashboardContent);
-            return 0;
-        }
+    //Add Dashboards and manipulation function
+    var addDashboard = function (dashboardContent) {
+        $scope.data.dashboards.push(dashboardContent);
+        return 0;
+    }
 
-        $scope.newDashboard = function () {
-            var modalInstance = $uibModal.open({
-                templateUrl: "dashboardModal.html",
-                controller: "DashboardContentCtrl",
-                resolve: {
-                    model: function () {
-                        return {
-                            addDashboard:addDashboard,
-                            title: "Add Dashboard"
-                        };
-                    }
+    $scope.newDashboard = function () {
+        var modalInstance = $uibModal.open({
+            templateUrl: "dashboardModal.html",
+            controller: "DashboardContentCtrl",
+            resolve: {
+                model: function () {
+                    return {
+                        addDashboard:addDashboard,
+                        title: "Add Dashboard"
+                    };
                 }
-            });
-        };
+            }
+        });
+    };
 
-        $scope.removeDashboard = function($event,$index){
-            $scope.data.dashboards.splice($index,1);
-        }
+$scope.removeDashboard = function($event,$index){
+    $scope.data.dashboards.splice($index,1);
+}
 
         //JSON file Creation on Export
         const saveTemplateAsFile = (filename, jsonToWrite) => {
@@ -170,6 +187,6 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
             saveTemplateAsFile("settings.json", JSON.stringify($scope.data,null,"\t"))
             saveTemplateAsFile("ServerJson."+$scope.data.processType+"-"+$scope.data.processName+".json",JSON.stringify(convert2serverJson($scope.data),null,"\t"));
         }
-
+        return data;
     }
 ])

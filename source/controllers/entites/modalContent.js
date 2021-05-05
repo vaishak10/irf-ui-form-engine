@@ -5,7 +5,6 @@ irfUiFormEngine.controller('ModalContentCtrl', function ($scope, $uibModalInstan
     $scope.title = model.title;
 
     $scope.submitStageDetails = function () {
-        console.log(model);
         model.addStage($scope.dialogData);
         if (!model.isDuplicateStages()) {
             $scope.$close();

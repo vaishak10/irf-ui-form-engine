@@ -1,4 +1,4 @@
-<div class="box box-theme" style="margin-bottom:600px">
+<div class="box box-theme">
     <div class="box-header with-border">
         <h3 class="box-title">Entity Information</h3>
     </div>
@@ -6,10 +6,33 @@
         <div class="config-section">
             <hr>
         </div>
-        <div>
-            <json-editor options="obj.options" json="obj.data" editor="editor"></json-editor>
-        </div>
         <div class="config-body">
+            <div class="config-info">
+                <div class="config-options config-title">
+                    <label class="config-field">
+                        Title
+                    </label>
+                    <input type="text" name="configTitle" class="config-title" ng-model="data.title" required>
+                </div>
+                <div class="config-options">
+                    <label class="config-field">
+                        JsonPath
+                    </label>
+                    <input type="text" name="configTitle" class="config-title" ng-model="data.jsonPath" required>
+                </div>
+                <div class="config-options">
+                    <label class="config-filed">
+                        Get Includes
+                    </label>
+                    <textarea ng-model="data.getIncludes" class = "config-title" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="config-options">
+                    <label class="config-filed">
+                        Overrides
+                    </label>
+                    <textarea ng-model="data.overrides" class = "config-title" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+            </div>
             <div class="config-submit-section">
                 <hr>
             </div>

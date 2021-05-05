@@ -1,125 +1,78 @@
-<style>
-    .temp-div{
-        border: 1px solid #dddddd;
-        cursor: pointer;
-        text-align: center;
-        padding: 1px;
-        padding-right: 2px;
-        border-radius: 4px;
-        color: #444444;
-        background-color: #f4f4f4;
-        display: grid;
-        justify-items: center;
-        align-items: center;
-        grid-template-columns: 8fr 1fr;
-    }
-    .container-div{
-        display:grid;
-        grid-row-gap:0.2rem;
-        max-height:100px;
-        overflow-y:scroll;
-    }
-    .close-div{
-        justify-self: right;
-        padding-right: 12px;
-    }
-</style>
 <div class="box box-theme">
     <div class="box-header with-border">
         <h3 class="box-title">Entity Information</h3>
     </div>
     <div class="box-body entity-info-box form-horizontal">
+        <div class="config-section">
+            <hr>
+        </div>
         <div class="config-body">
             <div class="config-info">
                 <div class="config-options config-title">
                     <label class="config-field">
                         Title
                     </label>
-                    <input type="text" name="configTitle" class="config-title" ng-model="entity.title" required>
+                    <input type="text" name="configTitle" class="config-title" ng-model="data.entities[data.entityIndex].config.title" required>
                 </div>
                 <div class="config-options config-search-title">
                     <label class="config-field">
                         Search Title
                     </label>
-                    <input type="text" name="configTitle" class="config-search-title" ng-model="entity.searchTitle" required>
-                </div>
-                <div class="config-options config-api">
-                    <label class="config-field" for="cars">Api Resolver </label>
-                    <select name="cars" id="cars">
-                    <option value="">Choose Api</option>
-                    <option value="LeadApi">Lead Api</option>
-                    <option value="IndividualLoanApi">Individual Loan Api</option>
-                    </select>
+                    <input type="text" name="configTitle" class="config-search-title" ng-model="data.entities[data.entityIndex].config.search_title" required>
                 </div>
                 <div class="config-options config-api">
                     <label class="config-field">
-                        Filters 
+                        API
                     </label>
-                    <div>
-                        <div class="container-div"><div class="temp-div" ng-show="entity.filters.length > 0" ng-repeat="filter in entity.filters track by $index"><div class="text-div">{{filter}}</div><i ng-click="removeApiFilter($index)"class="fa fa-close close-div"></i></div></div>
-                        <select name="users" ng-show="filters" ng-options="filter for filter in filters" ng-model="tempSelected" ng-change="addFilter()">
-                        <option value="">--Select Filter--</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="config-options config-api">
-                    <label class="config-field">
-                        Columns 
-                    </label>
-                    <div>
-                        <div class="container-div"><div class="temp-div" ng-show="entity.colDefinition.length > 0" ng-repeat="defnition in entity.colDefinition track by $index"><div class="text-div">{{defnition.title | translate }}</div><i ng-click="removeApiColDefnition($index)"class="fa fa-close close-div"></i></div></div>
-                        <select name="users" ng-show="colDefinition" ng-options="colDef.name for colDef in colDefinition" ng-model="tempDefSelected" ng-change="addDef()">
-                        <option value="">--Select Columns--</option>
-                        </select>
-                    </div>
+                    <input type="text" name="configApi" class="config-api" ng-model="data.entities[data.entityIndex].config.api" required>
                 </div>
                 <div class="config-options config-per-page">
                     <label class="config-field">
                         Per Page
                     </label>
-                    <input type="text" name="configPerPage" class="config-per-page" ng-model="entity.perPage" required>
+                    <input type="text" name="configPerPage" class="config-per-page" ng-model="data.entities[data.entityIndex].config.perPage" required>
                 </div>
                 <div class="config-options config-server-paginate">
                     <label class="config-field">
                         Server Paginate
                     </label>
-                    <input type="checkbox" name="configServerPaginate" class="config-server-paginate" ng-model="entity.serverPaginate" required>
+                    <input type="checkbox" name="configServerPaginate" class="config-server-paginate" ng-model="data.entities[data.entityIndex].config.serverPaginate" required>
                 </div>
                 <div class="config-options config-paginate">
                     <label class="config-field">
                         Paginate
                     </label>
-                    <input type="checkbox" name="configPaginate" class="config-paginate" ng-model="entity.paginate" required>
+                    <input type="checkbox" name="configPaginate" class="config-paginate" ng-model="data.entities[data.entityIndex].config.paginate" required>
                 </div>
                 <div class="config-options config-page-length">
                     <label class="config-field">
                         Page Length
                     </label>
-                    <input type="text" name="configPageLength" class="config-page-length" ng-model="entity.pageLength" required>
+                    <input type="text" name="configPageLength" class="config-page-length" ng-model="data.entities[data.entityIndex].config.pageLength" required>
                 </div>
                 <div class="config-options config-target-type">
                     <label class="config-field">
                         Target Type
                     </label>
-                    <input type="text" name="configTargetType" class="config-target-type" ng-model="entity.targetType" required>
+                    <input type="text" name="configTargetType" class="config-target-type" ng-model="data.entities[data.entityIndex].config.targetType" required>
                 </div>
                 <div class="config-options config-target-page-name">
                     <label class="config-field">
                         Target Page Name
                     </label>
-                    <input type="text" name="configTargetPageName" class="config-target-page-name" ng-model="entity.targetPageName" required>
+                    <input type="text" name="configTargetPageName" class="config-target-page-name" ng-model="data.entities[data.entityIndex].config.targetPageName" required>
                 </div>
                 <div class="config-options config-target-param">
                     <label class="config-field">
                         Target Param
                     </label>
-                    <input type="text" name="configTargetParam" class="config-target-param" ng-model="entity.targetParam" required>
+                    <input type="text" name="configTargetParam" class="config-target-param" ng-model="data.entities[data.entityIndex].config.targetParam" required>
                 </div>
                 <div class="config-options config-style">
                     <label class="config-field">
                         Style
                     </label>
-                    <input type="text" name="configStyle" class="config-style" ng-model="entity.style" required>
+                    <input type="text" name="configStyle" class="config-style" ng-model="data.entities[data.entityIndex].config.style" required>
                 </div>
             </div>
             <div class="config-submit-section">
