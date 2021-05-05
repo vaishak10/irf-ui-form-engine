@@ -1,3 +1,5 @@
+var irfUiFormEngine = angular.module("uiFormEngine",[]);
+
 irfUiFormEngine.controller('configCtrl', function ($scope, $uibModalInstance, model) {
     $scope.entityData = {};
     $scope.title = model.title;
