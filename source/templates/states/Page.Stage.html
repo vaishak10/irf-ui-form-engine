@@ -1,0 +1,218 @@
+<style>
+    input[type=text]{
+        border-left: none !important;
+        border-top: none !important;
+        border-right: none !important;
+        border: 1px solid #ccc;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    input:focus{
+        outline: none;
+    }
+    .entity-heading>h1 {
+        font-size: 20px;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+        padding-left: 15px;
+    }
+    .entity-item>p{
+        margin: 2px;
+    }
+    .box{
+        margin-left: 15px;
+        width: 97%;
+    }
+    .entity{
+        position: relative;
+    }
+    .add-entities{
+        position: absolute;
+        bottom: 2px;
+        display: grid;
+        grid-template-columns: 4.5fr 1.2fr;
+        padding: 0px 7px;
+    }
+    .entity-item{
+        position: relative;
+        padding: 8px;
+        /* text-align: center; */
+        background: #ededed;
+        margin: 2px;
+        border-radius: 2px;
+        font-size: 14px;
+        border: 0.1px solid #d0d0d0;
+        /* justify-items: center; */
+        align-items: center;
+        display: grid;
+        grid-template-columns: 9fr 1fr;
+        /* padding-left: 10px; */
+        cursor: pointer;
+    }
+    .design-section{
+        position: relative;
+    }
+    .entity-list{
+        position: relative;
+        display: grid;
+        overflow-y: scroll;
+        max-height: 230px;
+    }
+
+    .draggable-box{
+        position: relative;
+        padding: 7px;
+        text-align: center;
+        background: #c1bfbf;
+        margin: 5px;
+        border-radius: 5px;
+    }
+    .entity-box{
+        position: relative;
+        display: grid;
+        grid-template-rows: 0fr 3fr 0fr;
+    }
+    .entity-add-section{
+        position: relative;
+        bottom: 5px;
+    }
+    .empty-list-section{
+        text-align: center;
+        color: grey;
+    }
+    .icon {
+        display: grid;
+        grid-template-columns: 0.3fr 0.3fr;
+        grid-column-gap: 0.5rem;
+    }
+    .entity-close,
+    .entity-edit{
+        padding: 5px;
+        /* margin-right: 10px; */
+    }
+    .entity-section>hr{
+        margin-top: 10px;
+    }
+    .stage-info{
+        display: grid;
+        /*grid-row-gap: 1rem;*/
+    }
+    .stage-options {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-column-gap: 1.5rem;
+    }
+    .stage-info-box{
+        padding-bottom: 25px;
+    }
+    .stage-input-field{
+        margin-bottom: 0px;
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+    mark.gray{
+        color:#808080;
+        background: none;
+    }
+
+</style>
+
+<div class="editor-design">
+    <div class="entity-heading">
+        <h1>Entity Details</h1>
+    </div>
+    <div class="box box-theme">
+        <div class="box-header with-border">
+            <h3 class="box-title">Stage Information</h3>
+        </div>
+        <div class="box-body stage-info-box form-horizontal">
+            <div class="stage-info">
+                <div class="stage-options stage-name">
+                    <label class="stage-input-field">
+                        Name
+                    </label>
+                    <input type="text" name="stageName" class="stage-name" ng-model="data.stages[data.stageIndex].name" required>
+                </div>
+                <div class="stage-options stage-code">
+                    <label class="stage-input-field">
+                        Code
+                    </label>
+                    <input type="text" name="order" class="code" ng-model="data.stages[data.stageIndex].code" required>
+                </div>
+                <div class="stage-options stage-order">
+                    <label class="stage-input-field">
+                        Order
+                    </label>
+                    <input type="text" name="order" class="order" ng-model="data.stages[data.stageIndex].order" required>
+                </div>
+                <div class="stage-options stage-accounting">
+                    <label class="stage-input-field">
+                        Is Accounting Opening
+                    </label>
+                    <input type="text" name="order" class="account" ng-model="data.stages[data.stageIndex].isAccountOpening" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-theme">
+        <div class="box-header with-border">
+            <h3 class="box-title">Entities</h3>
+        </div>
+        <div class="box-body entity-box form-horizontal">
+            <div>
+                <div ng-if="rootModel.stages[data.stageIndex].entities.length == 0">
+                    <h5 class="empty-list-section">Add a Entity</h5>
+                </div>
+                <div ng-if="rootModel.stages[data.stageIndex].entities.length > 0" class="entity-list">
+                    <div class="entity-item {{entity.class}}" ng-click="selectEntity($event,$index)" ng-repeat="entity in rootModel.stages[data.stageIndex].entities track by $index">
+                        <p>{{entity.name}} | <mark class="gray">{{entity.type}}</mark></p>
+                        <div class="icon">
+                            <span title="Edit Entity" class="fa fa-pencil entity-edit" ng-click=editEntity($event,$index)></span>
+                            <span title="Close Entity" class="fa fa-close entity-close" ng-click=removeEntity($event,$index)></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="entity-add-section">
+                <div class="entity-section">
+                    <hr>
+                </div>
+                <div>
+                    <button ng-click="open()" class="btn btn-theme"> <i class="fa fa-plus"></i> Add</button>
+                </div>
+            </div>
+            <!-- <div class="stage-add-section">
+                <div class="schema-form-section">
+                    <hr>
+                </div>
+                <div>
+                    <button ng-click="export()" class="btn btn-theme"> <i class="fa fa-download"></i>Export</button>
+                </div>
+            </div> -->
+        </div>
+    </div> 
+    <ui-view></ui-view>
+</div>
+
+<!-- Entity Addtion Modal -->
+
+
+<!-- <div class="stage-design">
+    <h2>This is <b>Stage</b> Entity with Page configurations(Child view of Process)</h2>
+    <div class="go-to-ui-entity">
+        <label>Go to UI Entity: </label>
+        <button class="btn btn-warning" ng-click="goToUIEntity()">Submit</button>
+    </div>
+    <ui-view></ui-view>
+</div>
+<div>
+    <button ng-click="ss()">Click Me</button>
+    <button ng-click="sss()">Click Me</button>
+</div> -->

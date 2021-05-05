@@ -1,0 +1,18 @@
+{
+  "name": "irf-ui-form-engine",
+  "description": "A simple angular module",
+  "main": "gulpFile.js",
+  "authors": [
+    "Harish <harish.d@dvara.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/vaishak10/irf-ui-form-engine",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

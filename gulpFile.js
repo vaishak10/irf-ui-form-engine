@@ -17,3 +17,31 @@ gulp.task('build', function() {
         }))
         .pipe(gulp.dest('./source/tsjs'));
 });
+
+var templateCacheFile = 'dist/templates.js';
+var destFolder = "dist/controlle.js"
+
+
+gulp.task('templates', function(){
+    return gulp.src('templates/**/*.html')
+        .pipe(html2js(templateCacheFile, {
+            adapter: 'angular',
+            base: '.',
+            name: 'uiFormEngine',
+            rename: function(moduleName){
+                return "irf/" + moduleName;
+            }
+        }))
+        .pipe(gulp.dest(destFolder))
+});
+
+gulp.task('contorllers', function(){
+    var jsFiles = gulp.src(['source/contorllers/**/*.js']);
+    return jsFiles.pipe(concat(outJsFileName))
+        //.pipe(print())
+        .pipe(insert.transform(function(contents, file){
+            return contents;
+        }))
+        .pipe(gulp.dest(destFolder))
+});
+
