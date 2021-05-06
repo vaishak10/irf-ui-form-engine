@@ -137,7 +137,8 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
                 model: function () {
                     return {
                         addDashboard:addDashboard,
-                        title: "Add Dashboard"
+                        title: "Add Dashboard",
+                        routes: $scope.data.routes
                     };
                 }
             }
