@@ -9,6 +9,7 @@ irfUiFormEngine.controller("EditorCtrl", ["$log", "$scope", "$state", "$statePar
         var addStage = function (stage) {
             $scope.data.stages.push(stage);
         }
+        model.entites = ["Generic Queue", "Generic Detail", "Lead Detail"];
 
     var isDuplicateStages = function () {
 
