@@ -35,8 +35,8 @@ gulp.task('templates', function(){
         .pipe(gulp.dest(destFolder))
 });
 
-gulp.task('contorllers', function(){
-    var jsFiles = gulp.src(['source/contorllers/**/*.js']);
+gulp.task('controllers', function(){
+    var jsFiles = gulp.src(['source/controllers/**/*.js']);
     return jsFiles.pipe(concat(outJsFileName))
         //.pipe(print())
         .pipe(insert.transform(function(contents, file){
