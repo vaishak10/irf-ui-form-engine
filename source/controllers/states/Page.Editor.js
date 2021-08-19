@@ -188,6 +188,6 @@ $scope.removeDashboard = function($event,$index){
             saveTemplateAsFile("settings.json", JSON.stringify($scope.data,null,"\t"))
             saveTemplateAsFile("ServerJson."+$scope.data.processType+"-"+$scope.data.processName+".json",JSON.stringify(convert2serverJson($scope.data),null,"\t"));
         }
-        return data;
+        //return data;
     }
 ])
