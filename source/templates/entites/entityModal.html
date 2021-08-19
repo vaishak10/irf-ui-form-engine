@@ -75,7 +75,13 @@
             <div class="select-entity-type">
                 <label class="select-page-type">Entity Type </label>
                 <div class="select-entity-name">
-                    <select ng-model="entityData.name" name="entity" ng-options="entity as entity for entity in entites">
+                    <!-- <select ng-model="entityData.name" name="entity" ng-options="entity as entity for entity in entites">
+                    </select> -->
+                    <select ng-model="entityData.name" name="entity">
+                        <option value="Generic Queue">Generic Queue</option>
+                        <option value="Generic Detail">Generic Detail</option>
+                        <option value="Lead Queue">Lead Queue</option>
+                        <option value="Lead Detail">Lead Detail</option>
                     </select>
                 </div>
             </div>
