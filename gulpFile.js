@@ -18,12 +18,12 @@ gulp.task('build', function() {
         .pipe(gulp.dest('./source/tsjs'));
 });
 
-var templateCacheFile = 'dist/templates.js';
-var destFolder = "dist/controlle.js"
+var templateCacheFile = 'dist/template.js';
+var destFolder = "dist/controller.js"
 
 
 gulp.task('templates', function(){
-    return gulp.src('templates/**/*.html')
+    return gulp.src('source/templates/**/*.html')
         .pipe(html2js(templateCacheFile, {
             adapter: 'angular',
             base: '.',
